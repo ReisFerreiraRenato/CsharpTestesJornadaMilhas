@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JornadaMilhas.Gerencidor;
+namespace JornadaMilhas.Gerenciador;
 public class GerenciadorDeOfertas
 {
     private readonly List<OfertaViagem> ofertaViagem = new();
