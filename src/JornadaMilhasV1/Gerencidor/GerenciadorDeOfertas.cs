@@ -1,14 +1,14 @@
-﻿using JornadaMilhasV1.Modelos;
+﻿using JornadaMilhas.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JornadaMilhasV1.Gerencidor;
+namespace JornadaMilhas.Gerencidor;
 public class GerenciadorDeOfertas
 {
-    private List<OfertaViagem> ofertaViagem = new List<OfertaViagem>();
+    private readonly List<OfertaViagem> ofertaViagem = new();
 
     public GerenciadorDeOfertas(List<OfertaViagem> ofertaViagem)
     {
@@ -19,36 +19,34 @@ public class GerenciadorDeOfertas
     {
         Console.WriteLine("-- Cadastro de ofertas --");
         Console.WriteLine("Informe a cidade de origem: ");
-        string origem = Console.ReadLine();
+        string origem = Console.ReadLine()!;
+
 
         Console.WriteLine("Informe a cidade de destino: ");
-        string destino = Console.ReadLine();
+        string destino = Console.ReadLine()!;
 
         Console.WriteLine("Informe a data de ida (DD/MM/AAAA): ");
-        DateTime dataIda;
-        if (!DateTime.TryParse(Console.ReadLine(), out dataIda))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime dataIda))
         {
             Console.WriteLine("Data de ida inválida.");
             return;
         }
 
         Console.WriteLine("Informe a data de volta (DD/MM/AAAA): ");
-        DateTime dataVolta;
-        if (!DateTime.TryParse(Console.ReadLine(), out dataVolta))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime dataVolta))
         {
             Console.WriteLine("Data de volta inválida.");
             return;
         }
 
         Console.WriteLine("Informe o preço: ");
-        double preco;
-        if (!double.TryParse(Console.ReadLine(), out preco))
+        if (!double.TryParse(Console.ReadLine(), out double preco))
         {
             Console.WriteLine("Formato de preço inválido.");
             return;
         }
 
-        OfertaViagem ofertaCadastrada = new OfertaViagem(new Rota(origem, destino), new Periodo(dataIda, dataVolta), preco);
+        OfertaViagem ofertaCadastrada = new(new Rota(origem, destino), new Periodo(dataIda, dataVolta), preco);
         AdicionarOfertaNaLista(ofertaCadastrada);
 
         Console.WriteLine("\nOferta cadastrada com sucesso.");

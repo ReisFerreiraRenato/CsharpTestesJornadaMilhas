@@ -1,7 +1,7 @@
-﻿using JornadaMilhasV1.Gerencidor;
-using JornadaMilhasV1.Modelos;
+﻿using JornadaMilhas.Gerencidor;
+using JornadaMilhas.Modelos;
 
-List<OfertaViagem> listaOfertasViagem = new List<OfertaViagem>();
+List<OfertaViagem> listaOfertasViagem = new();
 var gerenciador = new GerenciadorDeOfertas(listaOfertasViagem);
 
 gerenciador.CarregarOfertas();
@@ -23,7 +23,8 @@ while (true)
             break;
         case "3":
             Console.WriteLine("Ofertas com maior desconto:");
-            return;
+            Console.WriteLine("Em desenvolvimento!");
+            break;
         case "4":
             Console.WriteLine("Obrigada por utilizar o Jornada Milhas. Até mais!");
             return;

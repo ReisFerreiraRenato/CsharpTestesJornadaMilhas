@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JornadaMilhasV1.Validador;
+namespace JornadaMilhas.Validador;
 
 public class Erros : IEnumerable<Erro>
 {
