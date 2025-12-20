@@ -9,13 +9,13 @@ namespace JornadasMilhas.Test
     public class OfertaViagemDesconto
     {
         [Theory]
-        [InlineData(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE, "2024-02-01", "2024-02-05", 100, 20)]
+        [InlineData(100, 20)]
         public void RetornaPrecoAtualizadoQuandoAplicadoDesconto
-            (string origem, string destino, string dataida, string datavolta, double precoOriginal, double desconto)
+            (double precoOriginal, double desconto)
         {
             // arrange
-            Rota rota = new(origem, destino);
-            Periodo periodo = new(DateTime.Parse(dataida), DateTime.Parse(datavolta));
+            Rota rota = new(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE);
+            Periodo periodo = new(DateTime.Parse("2024-02-01"), DateTime.Parse("2024-02-05"));
             double precoComDesconto = precoOriginal - desconto;
 
             OfertaViagem oferta = new(rota, periodo, precoOriginal)
@@ -29,15 +29,14 @@ namespace JornadasMilhas.Test
         }
 
         [Theory]
-        [InlineData(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE, "2024-02-01", "2024-02-05", 100, 120)]
-        public void RetornaDescontoMaximoQuandoValorDescontoMaiorQuePreco
-            (string origem, string destino, string dataida, string datavolta, double precoOriginal, double desconto)
+        [InlineData(100, 120, 30)]
+        [InlineData(100, 100, 30)]
+        public void RetornaDescontoMaximoQuandoValorDescontoMaiorOuIgualAoPreco
+            (double precoOriginal, double desconto, double precoComDesconto)
         {
             // arrange
-            Rota rota = new(origem, destino);
-            Periodo periodo = new(DateTime.Parse(dataida), DateTime.Parse(datavolta));
-            double precoComDesconto = precoOriginal * 0.30; // Desconto de 70%
-
+            Rota rota = new(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE);
+            Periodo periodo = new(DateTime.Parse("2024-02-01"), DateTime.Parse("2024-02-05"));
             OfertaViagem oferta = new(rota, periodo, precoOriginal)
             {
                 // act 
@@ -49,14 +48,33 @@ namespace JornadasMilhas.Test
         }
 
         [Theory]
-        [InlineData(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE, "2024-02-01", "2024-02-05", 100, - 150)]
+        [InlineData(- 150)]
         public void RetornaDescontoMaximoQuandoValorDescontoNegativo
-            (string origem, string destino, string dataida, string datavolta, double precoOriginal, double desconto)
+            (double desconto)
         {
             // arrange
-            Rota rota = new(origem, destino);
-            Periodo periodo = new(DateTime.Parse(dataida), DateTime.Parse(datavolta));
-            double precoComDesconto = precoOriginal; // Desconto negativo, se mantem o preço
+            Rota rota = new(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE);
+            Periodo periodo = new(DateTime.Parse("2024-02-01"), DateTime.Parse("2024-02-05"));
+            double precoComDesconto = 100; // Desconto negativo ou zero, se mantem o preço
+
+            OfertaViagem oferta = new(rota, periodo, precoComDesconto)
+            {
+                // act 
+                Desconto = desconto
+            };
+
+            // assert
+            Assert.Equal(precoComDesconto, oferta.Preco, 0.001);
+        }
+        [Theory]
+        [InlineData(100, 0)]
+        public void RetornaDescontoMaximoQuandoValorDescontoIgualAZero
+            (double precoOriginal, double desconto)
+        {
+            // arrange
+            Rota rota = new(Constantes.ORIGEM_TESTE, Constantes.DESTINO_TESTE);
+            Periodo periodo = new(DateTime.Parse("2024-02-01"), DateTime.Parse("2024-02-05"));
+            double precoComDesconto = precoOriginal; // Desconto negativo ou zero, se mantem o preço
 
             OfertaViagem oferta = new(rota, periodo, precoOriginal)
             {

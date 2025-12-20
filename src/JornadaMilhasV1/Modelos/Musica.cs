@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,11 @@ namespace JornadaMilhas.Modelos
     public class Musica
     {
         private int? anoLancamento;
-        private string artista;
+        private string? artista;
 
         public string Nome { get; set; }
         public int Id { get; set; }
-        public string Artista
+        public string? Artista
         {
             get => artista;
             set
@@ -42,6 +43,8 @@ namespace JornadaMilhas.Modelos
         public Musica(string nome)
         {
             Nome = nome;
+            Id = 0;
+            Artista = Constantes.ARTISTA_DESCONHECIDO;
         }
 
         public void ExibirFichaTecnica()

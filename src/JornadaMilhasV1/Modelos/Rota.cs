@@ -16,9 +16,9 @@ public class Rota: Valida
 
     public Rota(string origem, string destino)
     {
-        Origem = origem;
-        Destino = destino;
-
+        Origem = origem!;
+        Destino = destino!;
+        Validar();
     }
 
     protected override void Validar()

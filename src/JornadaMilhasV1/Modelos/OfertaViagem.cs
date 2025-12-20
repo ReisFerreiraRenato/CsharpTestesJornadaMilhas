@@ -23,21 +23,19 @@ public class OfertaViagem: Valida
         get => desconto;
         set
         {
-            desconto = value;
+            desconto = 0;
             PrecoOriginal = Preco;
-            if (desconto >= Preco)
+
+            if ((value > 0) && (value < Preco))
             {
-                desconto = Preco * DESCONTO_MAXIMO;
-                Preco *= (1 - DESCONTO_MAXIMO);
-            }
-            else if (desconto < 0)
+                desconto = value;
+            } 
+            else if (value >= Preco)
             {
-                desconto = 0;
+                desconto = PrecoOriginal * DESCONTO_MAXIMO;
             }
-            else
-            {
-                Preco -= desconto;
-            }
+
+            Preco -= desconto;
         }
     }
 
@@ -57,18 +55,22 @@ public class OfertaViagem: Valida
 
     protected override void Validar()
     {
-        if (Periodo == null)
+        try
+        {
+            if (!Periodo.EhValido)
+            {
+                Erros.RegistrarErro(Periodo.Erros.Sumario);
+            }
+        }
+        catch (NullReferenceException)
         {
             Erros.RegistrarErro(Constantes.ERRO_PERIODO_NULO);
-        }
-        else if (!Periodo.EhValido)
-        {
-            Erros.RegistrarErro(Periodo.Erros.Sumario);
-        } else if (Rota == null)
+        } 
+        if (Rota == null)
         {
             Erros.RegistrarErro(Constantes.ERRO_ROTA_INVALIDA);
         } 
-        else if (Preco <= 0)
+        if (Preco <= 0)
         {
             Erros.RegistrarErro(Constantes.ERRO_PRECO_INVALIDO);
         }

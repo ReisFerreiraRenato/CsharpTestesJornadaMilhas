@@ -133,11 +133,10 @@ namespace JornadasMilhas.Test
         public void RetornaArtistaDesconhecidoQuandoNuloOuEmBranco()
         {
             // Arrange
-            string? stringBranco = null;
             Musica musica = new(NOME)
             {
                 // Act
-                Artista = stringBranco
+                Artista = string.Empty
             };
 
             // Assert

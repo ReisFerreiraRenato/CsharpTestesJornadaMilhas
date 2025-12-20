@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace JornadaMilhas.Utils
         public const string ORIGEM_TESTE = "Origem Teste";
         public const string DESTINO_TESTE = "Destino Teste";
         public const string ARTISTA_DESCONHECIDO = "Artista Desconhecido.";
+
+        public const string STRING_NULA = null;
+        public const double DOUBLE_NEGATIVO = - 1000.0;
 
 
         //Cosntantes gerais (podem inclusive serem de testes também)
