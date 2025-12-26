@@ -38,6 +38,7 @@ public class OfertaViagem: Valida
             Preco -= desconto;
         }
     }
+    public bool Ativa { get; set; } = true;
 
 
     public OfertaViagem(Rota rota, Periodo periodo, double preco)
